@@ -1,6 +1,6 @@
 
 typedef struct{
-    char tab[4][4];
+    char tab[5][5];
 } tTabuleiro;
 
 void verficarVitoria(tTabuleiro tabuleiro);
@@ -39,6 +39,12 @@ void jogadaValida(tJogo);
 
 int main(){
 
+    tTabuleiro tabuleiro;
+
+   tabuleiro = inicializaTabuleiroInicio();
+   
+   imprimirTabuleiro(tabuleiro);
+
     return 0;
 }
 
@@ -46,4 +52,53 @@ tJogador inicializaJogador(){
     tJogador jogador;
     scanf("%s", jogador.nome);
     return jogador;
+}
+
+tTabuleiro inicializaTabuleiroInicio(){
+
+    int i = 0;
+    int j = 0;
+    tTabuleiro tabuleiro;
+    
+        //itera o tabuleiro e coloca as posicoes desejadas para serem printadas na primeira rodada
+
+        for(i=0;i<=4;i++){
+
+            for(j=0;j<=4;j++){
+                if(i%2!= 0){
+                    tabuleiro.tab[i][j] = '-';
+                }
+                else if(j%2!=0){
+                    tabuleiro.tab[i][j] = '|';
+              
+                }           
+        }
+    }
+
+    tabuleiro.tab[0][0] = '1';
+    tabuleiro.tab[0][2] = '2';
+    tabuleiro.tab[0][4] = '3';
+    tabuleiro.tab[2][0] = '4';
+    tabuleiro.tab[2][2] = '5';
+    tabuleiro.tab[2][4] = '6';
+    tabuleiro.tab[4][0] = '7';
+    tabuleiro.tab[4][2] = '8';
+    tabuleiro.tab[4][4] = '9';
+
+    return tabuleiro;
+}
+
+void imprimirTabuleiro(tTabuleiro tabuleiro){
+
+    int i = 0;
+    int j = 0;
+
+    for(i=0;i<=4;i++){
+
+        for(j=0;j<=4;j++){
+
+            printf("%c",tabuleiro.tab[i][j]);
+        }
+        printf("\n");
+    }
 }
