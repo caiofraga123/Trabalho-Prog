@@ -39,14 +39,22 @@ void jogadaValida(tJogo);
 
 int main(){
 
-    tTabuleiro tabuleiro;
+    tTabuleiro tabuleiroInicio;
+    tTabuleiro tabuleiroVazio;
 
-   tabuleiro = inicializaTabuleiroInicio();
-   
-   imprimirTabuleiro(tabuleiro);
+   tabuleiroInicio = inicializaTabuleiroInicio();
+   tabuleiroVazio = inicializaTabuleiroVazio();
+
+   imprimirTabuleiro(tabuleiroInicio);
+
+   printf("\n");
+
+   imprimirTabuleiro(tabuleiroVazio);
 
     return 0;
 }
+
+//+---------------------------------------------------------------------------------+
 
 tJogador inicializaJogador(){
     tJogador jogador;
@@ -84,6 +92,40 @@ tTabuleiro inicializaTabuleiroInicio(){
     tabuleiro.tab[4][0] = '7';
     tabuleiro.tab[4][2] = '8';
     tabuleiro.tab[4][4] = '9';
+
+    return tabuleiro;
+}
+
+tTabuleiro inicializaTabuleiroVazio(){
+
+    int i = 0;
+    int j = 0;
+    tTabuleiro tabuleiro;
+    
+        //itera o tabuleiro e coloca as posicoes desejadas para serem printadas na primeira rodada
+
+        for(i=0;i<=4;i++){
+
+            for(j=0;j<=4;j++){
+                if(i%2!= 0){
+                    tabuleiro.tab[i][j] = '-';
+                }
+                else if(j%2!=0){
+                    tabuleiro.tab[i][j] = '|';
+              
+                }           
+        }
+    }
+
+    tabuleiro.tab[0][0] = ' ';
+    tabuleiro.tab[0][2] = ' ';
+    tabuleiro.tab[0][4] = ' ';
+    tabuleiro.tab[2][0] = ' ';
+    tabuleiro.tab[2][2] = ' ';
+    tabuleiro.tab[2][4] = ' ';
+    tabuleiro.tab[4][0] = ' ';
+    tabuleiro.tab[4][2] = ' ';
+    tabuleiro.tab[4][4] = ' ';
 
     return tabuleiro;
 }
