@@ -27,15 +27,18 @@ typedef struct{
     tJogador jogador2;
 }tJogo;
 
-void incializaJogo(tJogo jogo);
-
-void jogar(tJogo jogo);
-
 void jogadaValida(tJogo);
 
 //+---------------------------------------------------------------------------------+
 
 #include <stdio.h>
+
+tTabuleiro inicializaTabuleiroInicio();
+tTabuleiro inicializaTabuleiroVazio();
+void imprimirTabuleiro(tTabuleiro tabuleiro);
+
+tJogador inicializaJogador();
+tJogo inicializaJogo();
 
 int main(){
 
@@ -51,17 +54,55 @@ int main(){
 
    imprimirTabuleiro(tabuleiroVazio);
 
+   // Inicializa o jogo com os jogadores e tabuleiro
+   tJogo jogo = inicializaJogo();
+
+   // Chama a função que contém a lógica do jogo
+   jogar(jogo);
+
     return 0;
 }
 
 //+---------------------------------------------------------------------------------+
 
+void jogar(tJogo jogo){
+    int jogadas = 0, posicao;
+    char caracter;
+
+}
+
+//Função que inicializa o jogo
+tJogo inicializaJogo(){
+    tJogo jogo;
+    
+    // Inicializa o tabuleiro
+    jogo.tabuleiro = inicializaTabuleiroInicio();
+    jogo.tabuleiro = inicializaTabuleiroVazio();
+
+    // Inicializa os jogadores
+    printf("Jogador 1, ");
+    jogo.jogador1 = inicializaJogador();
+
+    printf("Jogador 2, ");
+    jogo.jogador2 = inicializaJogador();
+
+    return jogo;
+}
+
+// Função responsável por inicializar cada jogador
 tJogador inicializaJogador(){
     tJogador jogador;
-    scanf("%s", jogador.nome);
+
+    printf("Digite o nome do jogador: ");
+    fgets(jogador.nome, sizeof(jogador.nome), stdin);
+
+    // Remove o caractere de nova linha, se presente
+    jogador.nome[strcspn(jogador.nome, "\n")] = '\0';
+
     return jogador;
 }
 
+// Função que inicializa o tabuleiro mostrando o número de cada posição
 tTabuleiro inicializaTabuleiroInicio(){
 
     int i = 0;
@@ -96,6 +137,7 @@ tTabuleiro inicializaTabuleiroInicio(){
     return tabuleiro;
 }
 
+//Função que inicializa o tabuleiro com as posições vazias
 tTabuleiro inicializaTabuleiroVazio(){
 
     int i = 0;
@@ -130,6 +172,7 @@ tTabuleiro inicializaTabuleiroVazio(){
     return tabuleiro;
 }
 
+// Função que imprime o tabuleiro após cada jogada
 void imprimirTabuleiro(tTabuleiro tabuleiro){
 
     int i = 0;
