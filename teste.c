@@ -32,11 +32,15 @@ void jogadaValida(tJogo);
 //+---------------------------------------------------------------------------------+
 
 #include <stdio.h>
+#include <string.h>
+
+void imprimirTabuleiro(tTabuleiro tabuleiro);
+void atualizaTabuleiro(tTabuleiro *tabuleiro, int posicao, char caracter);
+void jogar(tJogo *jogo);
+
 
 tTabuleiro inicializaTabuleiroInicio();
 tTabuleiro inicializaTabuleiroVazio();
-void imprimirTabuleiro(tTabuleiro tabuleiro);
-
 tJogador inicializaJogador();
 tJogo inicializaJogo();
 
@@ -58,16 +62,28 @@ int main(){
    tJogo jogo = inicializaJogo();
 
    // Chama a função que contém a lógica do jogo
-   jogar(jogo);
+   jogar(&jogo);
 
     return 0;
 }
 
 //+---------------------------------------------------------------------------------+
 
-void jogar(tJogo jogo){
+void jogar(tJogo *jogo){
     int jogadas = 0, posicao;
-    char caracter;
+    char caracter = 'X';
+
+    while(jogadas < 9){
+        imprimirTabuleiro(jogo->tabuleiro);
+        printf("Digite a posição: ");
+        scanf("%d", &posicao);
+
+        atualizaTabuleiro(&jogo->tabuleiro, posicao, caracter);
+        imprimirTabuleiro(jogo->tabuleiro);
+
+        jogadas += 1;
+
+    }
 
 }
 
@@ -94,7 +110,7 @@ tJogador inicializaJogador(){
     tJogador jogador;
 
     printf("Digite o nome do jogador: ");
-    fgets(jogador.nome, sizeof(jogador.nome), stdin);
+    jogador.nome[strcspn(jogador.nome, "\n")] = '\0';
 
     // Remove o caractere de nova linha, se presente
     jogador.nome[strcspn(jogador.nome, "\n")] = '\0';
@@ -135,6 +151,19 @@ tTabuleiro inicializaTabuleiroInicio(){
     tabuleiro.tab[4][4] = '9';
 
     return tabuleiro;
+}
+
+// Função que atualiza o tabuleiro com a posição marcada
+void atualizaTabuleiro(tTabuleiro *tabuleiro, int posicao, char caracter){
+    int i = 2 * ((posicao - 1) / 3);
+    int j = 2 * ((posicao - 1) % 3);
+
+    // Verifica se a posição está vazia
+    if (tabuleiro->tab[i][j] == ' ') {
+        tabuleiro->tab[i][j] = caracter;
+    } else {
+        printf("Posição já ocupada.");
+    }
 }
 
 //Função que inicializa o tabuleiro com as posições vazias
