@@ -3,7 +3,7 @@ typedef struct{
     char tab[5][5];
 } tTabuleiro;
 
-void verficarVitoria(tTabuleiro tabuleiro);
+int verficarVitoria(tTabuleiro tabuleiro);
 
 tTabuleiro inicializaTabuleiroInicio();
 
@@ -37,6 +37,7 @@ void jogadaValida(tJogo);
 void imprimirTabuleiro(tTabuleiro tabuleiro);
 void atualizaTabuleiro(tTabuleiro *tabuleiro, int posicao, char caracter);
 void jogar(tJogo *jogo);
+int verificaPosicao(int posicao);
 
 
 tTabuleiro inicializaTabuleiroInicio();
@@ -45,18 +46,6 @@ tJogador inicializaJogador();
 tJogo inicializaJogo();
 
 int main(){
-
-    tTabuleiro tabuleiroInicio;
-    tTabuleiro tabuleiroVazio;
-
-   tabuleiroInicio = inicializaTabuleiroInicio();
-   tabuleiroVazio = inicializaTabuleiroVazio();
-
-   imprimirTabuleiro(tabuleiroInicio);
-
-   printf("\n");
-
-   imprimirTabuleiro(tabuleiroVazio);
 
    // Inicializa o jogo com os jogadores e tabuleiro
    tJogo jogo = inicializaJogo();
@@ -71,18 +60,40 @@ int main(){
 
 void jogar(tJogo *jogo){
     int jogadas = 0, posicao;
-    char caracter = 'X';
+    char caracter = 'O';
 
-    while(jogadas < 9){
+    while(jogadas < 9){ 
         imprimirTabuleiro(jogo->tabuleiro);
         printf("Digite a posição: ");
         scanf("%d", &posicao);
 
+        while (verificaPosicao(posicao)){
+            scanf("%d", &posicao);
+        }
+
         atualizaTabuleiro(&jogo->tabuleiro, posicao, caracter);
-        imprimirTabuleiro(jogo->tabuleiro);
+        //imprimirTabuleiro(jogo->tabuleiro);
 
         jogadas += 1;
 
+        if (!(jogadas % 2)){
+            caracter = 'O';
+        } else {
+            caracter = 'X';
+        }
+
+        if (verficarVitoria(jogo->tabuleiro) == 1) {
+            printf("O jogador %s venceu", &jogo->jogador1.nome);
+        }
+
+        if (verficarVitoria(jogo->tabuleiro) == 2) {
+            printf("O jogador %s venceu", &jogo->jogador2.nome);
+        }
+
+    }
+
+    if (!verficarVitoria(jogo->tabuleiro)){
+        printf("O jogo terminou empatado");
     }
 
 }
@@ -93,6 +104,13 @@ tJogo inicializaJogo(){
     
     // Inicializa o tabuleiro
     jogo.tabuleiro = inicializaTabuleiroInicio();
+
+    imprimirTabuleiro(jogo.tabuleiro);
+
+    printf("Estas são as posições do tabuleiro");
+
+    printf("\n");
+
     jogo.tabuleiro = inicializaTabuleiroVazio();
 
     // Inicializa os jogadores
@@ -215,4 +233,17 @@ void imprimirTabuleiro(tTabuleiro tabuleiro){
         }
         printf("\n");
     }
+}
+
+int verificaPosicao(int posicao){
+    if (!(posicao >= 1 && posicao <= 9)){
+        printf ("Posição inválida, digite novamente");
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int verificarVitoria(tTabuleiro tTabuleiro){
+
 }
