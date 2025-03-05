@@ -32,7 +32,7 @@ void imprimirTabuleiro(tTabuleiro tabuleiro);
 #include <string.h>
 
 void imprimirTabuleiro(tTabuleiro tabuleiro);
-void atualizaTabuleiro(tTabuleiro *tabuleiro, int posicao, char caracter);
+int atualizaTabuleiro(tTabuleiro *tabuleiro, int posicao, char caracter);
 void jogar(tJogo *jogo);
 void jogadaValida(tJogo);
 int verificaPosicao(int posicao);
@@ -70,7 +70,10 @@ void jogar(tJogo *jogo){
             scanf("%d", &posicao);
         }
 
-        atualizaTabuleiro(&jogo->tabuleiro, posicao, caracter);
+        while (atualizaTabuleiro(&jogo->tabuleiro, posicao, caracter)){
+            scanf("%d", &posicao);
+        }
+
         //imprimirTabuleiro(jogo->tabuleiro);
 
         jogadas += 1;
@@ -170,7 +173,7 @@ tTabuleiro inicializaTabuleiroInicio(){
 }
 
 // Função que atualiza o tabuleiro com a posição marcada
-void atualizaTabuleiro(tTabuleiro *tabuleiro, int posicao, char caracter){
+int atualizaTabuleiro(tTabuleiro *tabuleiro, int posicao, char caracter){
 
     int i = 2 * ((posicao - 1) / 3);
     int j = 2 * ((posicao - 1) % 3);
@@ -178,8 +181,10 @@ void atualizaTabuleiro(tTabuleiro *tabuleiro, int posicao, char caracter){
     // Verifica se a posição está vazia
     if (tabuleiro->tab[i][j] == ' ') {
         tabuleiro->tab[i][j] = caracter;
+        return 0;
     } else {
         printf("Posicao ja ocupada. \n");
+        return 1;
     }
 }
 
