@@ -17,7 +17,7 @@ typedef struct{
 
 tJogador inicializaJogador();
 
-// int verificarVitoria(tTabuleiro tabuleiro);
+int verificarVitoria(tTabuleiro tabuleiro);
 
 tTabuleiro inicializaTabuleiroInicio();
 
@@ -71,6 +71,7 @@ void jogar(tJogo *jogo){
         }
 
         while (atualizaTabuleiro(&jogo->tabuleiro, posicao, caracter)){
+            printf("Digite a posicao: ");
             scanf("%d", &posicao);
         }
 
@@ -84,19 +85,21 @@ void jogar(tJogo *jogo){
             caracter = 'X';
         }
 
-        // if (verficarVitoria(jogo->tabuleiro) == 1) {
-        //     printf("O jogador %s venceu", jogo->jogador1.nome);
-        // }
+        if (verificarVitoria(jogo->tabuleiro) == 1) {
+            printf("O jogador %s venceu", jogo->jogador1.nome);
+        }
 
-        // if (verficarVitoria(jogo->tabuleiro) == 2) {
-        //     printf("O jogador %s venceu", jogo->jogador2.nome);
-        // }
+        if (verificarVitoria(jogo->tabuleiro) == 2) {
+            printf("O jogador %s venceu", jogo->jogador2.nome);
+        }
 
     }
 
-    // if (!verficarVitoria(jogo->tabuleiro)){
-    //     printf("O jogo terminou empatado");
-    // }
+    imprimirTabuleiro(jogo->tabuleiro);
+
+    if (!verificarVitoria(jogo->tabuleiro)){
+        printf("O jogo terminou empatado");
+    }
 
 }
 
@@ -248,6 +251,33 @@ int verificaPosicao(int posicao){
     }
 }
 
-// int verificarVitoria(tTabuleiro tabuleiro){
+int verificarVitoria(tTabuleiro tabuleiro){
 
-//}
+    for (int k = 0; k < 5; k++){
+        if (tabuleiro.tab[k][0] == 'O' && tabuleiro.tab[k][1] == tabuleiro.tab[k][0] && tabuleiro.tab[k][2] == tabuleiro.tab[k][0]){
+            return 1;
+        } else if (tabuleiro.tab[0][k] == 'O' && tabuleiro.tab[1][k] == tabuleiro.tab[0][k] && tabuleiro.tab[2][k] == tabuleiro.tab[0][k]){
+            return 1;
+        }
+
+        if (tabuleiro.tab[k][0] == 'X' && tabuleiro.tab[k][1] == tabuleiro.tab[k][0] && tabuleiro.tab[k][2] == tabuleiro.tab[k][0]){
+            return 2;
+        } else if (tabuleiro.tab[0][k] == 'X' && tabuleiro.tab[1][k] == tabuleiro.tab[0][k] && tabuleiro.tab[2][k] == tabuleiro.tab[0][k]){
+            return 2;
+        }
+    }
+
+    if (tabuleiro.tab[0][0] == 'O' && tabuleiro.tab[1][1] == tabuleiro.tab[0][0] && tabuleiro.tab[2][2] == tabuleiro.tab[0][0]){
+        return 1;
+    } else if (tabuleiro.tab[0][2] == 'O' && tabuleiro.tab[1][1] == tabuleiro.tab[0][2] && tabuleiro.tab[2][0] == tabuleiro.tab[0][2]){
+        return 1;
+    }
+
+    if (tabuleiro.tab[0][0] == 'X' && tabuleiro.tab[1][1] == tabuleiro.tab[0][0] && tabuleiro.tab[2][2] == tabuleiro.tab[0][0]){
+        return 1;
+    } else if (tabuleiro.tab[0][2] == 'X' && tabuleiro.tab[1][1] == tabuleiro.tab[0][2] && tabuleiro.tab[2][0] == tabuleiro.tab[0][2]){
+        return 1;
+    }
+
+    return 0;
+}
