@@ -61,8 +61,10 @@ void jogar(tJogo *jogo){
     int jogadas = 0, posicao;
     char caracter = 'O';
 
-    while(jogadas < 9){ 
+    while(jogadas < 9){
+        printf("\n"); 
         imprimirTabuleiro(jogo->tabuleiro);
+        printf("\n");
         printf("Digite a posicao: ");
         scanf("%d", &posicao);
 
